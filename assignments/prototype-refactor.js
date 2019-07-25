@@ -137,17 +137,44 @@ console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
 
 // Stretch task:
 // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.
+// * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
+class Hero extends Humanoid {
+  constructor(heroAttr) {
+    super(heroAttr);
+  }
+  attack(target) {
+    target.healthPoints -= 2;
 
+    if (target.healthPoints <= 0) {
+      target.healthPoints = 0;
+      return target.destroy();
+    } else {
+      return `${this.name} attacked ${target.name} with ${
+        this.weapons[0]
+      } and inflicted 2 damage. ${target.name} now has ${
+        target.healthPoints
+      } health.`;
+    }
+  } //attack
+}
 class Villian extends Humanoid {
   constructor(villianAttr) {
     super(villianAttr);
   }
   darkMagic(target) {
-    console.log(
-      `${this.name} attacked and inflicted 2 damage to ${target.name}`
-    );
-    return (target.healthPoints -= 2);
-  }
+    target.healthPoints -= 3;
+
+    if (target.healthPoints <= 0) {
+      target.healthPoints = 0;
+      return target.destroy();
+    } else {
+      return `${this.name} attacked ${target.name} with ${
+        this.weapons[0]
+      } and inflicted 2 damage. ${target.name} now has ${
+        target.healthPoints
+      } health.`;
+    }
+  } //darkMagic
 }
 
 const warlock = new Villian({
@@ -164,12 +191,38 @@ const warlock = new Villian({
   language: "Common Tongue"
 });
 
-console.log(warlock.darkMagic(archer));
-console.log(archer.healthPoints);
-console.log(warlock.name);
-console.log(warlock.language);
+const hero = new Hero({
+  createdAt: new Date(),
+  dimensions: {
+    length: 1,
+    width: 2,
+    height: 4
+  },
+  healthPoints: 10,
+  name: "Marth",
+  team: "Grannvale",
+  weapons: ["Tyrfing"],
+  language: "Common Tongue"
+});
+
+console.log(hero.greet());
 console.log(warlock.greet());
-console.log(warlock.takeDamage());
-console.log(warlock.destroy());
-// * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
+console.log(warlock.healthPoints);
+console.log(hero.attack(warlock));
+console.log(hero.attack(warlock));
+console.log(hero.attack(warlock));
+console.log(hero.attack(warlock));
+console.log(hero.attack(warlock));
+console.log(warlock.healthPoints);
+
+console.log(hero.healthPoints);
+console.log(warlock.darkMagic(hero));
+console.log(hero.healthPoints);
+console.log(warlock.darkMagic(hero));
+console.log(hero.healthPoints);
+console.log(warlock.darkMagic(hero));
+console.log(hero.healthPoints);
+console.log(warlock.darkMagic(hero));
+console.log(hero.healthPoints);
+
 // * Create two new objects, one a villain and one a hero and fight it out with methods!
