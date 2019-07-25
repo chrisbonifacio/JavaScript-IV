@@ -61,18 +61,18 @@ class CharacterStats extends GameObject {
   * should inherit destroy() from GameObject through CharacterStats
   * should inherit takeDamage() from CharacterStats
 */
-Humanoid.prototype = Object.create(CharacterStats.prototype);
 
-function Humanoid(humanAttr) {
-  CharacterStats.call(this, humanAttr);
-  this.team = humanAttr.team;
-  this.weapons = humanAttr.weapons;
-  this.language = humanAttr.language;
+class Humanoid extends CharacterStats {
+  constructor(humanAttr) {
+    super(humanAttr);
+    this.team = humanAttr.team;
+    this.weapons = humanAttr.weapons;
+    this.language = humanAttr.language;
+  }
+  greet() {
+    return `${this.name} offers a greeting in ${this.language}`;
+  }
 }
-
-Humanoid.prototype.greet = function() {
-  return `${this.name} offers a greeting in ${this.language}`;
-};
 
 /*
  * Inheritance chain: GameObject -> CharacterStats -> Humanoid
@@ -137,16 +137,18 @@ console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
 
 // Stretch task:
 // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.
-Villian.prototype = Object.create(Humanoid.prototype);
 
-function Villian(villianAttr) {
-  Humanoid.call(this, villianAttr);
+class Villian extends Humanoid {
+  constructor(villianAttr) {
+    super(villianAttr);
+  }
+  darkMagic(target) {
+    console.log(
+      `${this.name} attacked and inflicted 2 damage to ${target.name}`
+    );
+    return (target.healthPoints -= 2);
+  }
 }
-
-Villian.prototype.darkMagic = function(target) {
-  console.log(`${this.name} attacked and inflicted 2 damage to ${target.name}`);
-  return (target.healthPoints -= 2);
-};
 
 const warlock = new Villian({
   createdAt: new Date(),
