@@ -156,6 +156,14 @@ class Hero extends Humanoid {
       } health.`;
     }
   } //attack
+
+  usePotion() {
+    this.healthPoints += 4;
+
+    return `${this.name} used a Potion and restored some health! ${
+      this.name
+    } now has ${this.healthPoints} HP.`;
+  } //usePotion
 }
 class Villian extends Humanoid {
   constructor(villianAttr) {
@@ -222,7 +230,9 @@ console.log(warlock.darkMagic(hero));
 console.log(hero.healthPoints);
 console.log(warlock.darkMagic(hero));
 console.log(hero.healthPoints);
+console.log(hero.usePotion());
 console.log(warlock.darkMagic(hero));
 console.log(hero.healthPoints);
+console.log(warlock.darkMagic(hero));
 
 // * Create two new objects, one a villain and one a hero and fight it out with methods!
