@@ -26,6 +26,22 @@ class Instructor extends Person {
   grade(student, subject) {
     console.log(`${student.name} recieves a perfector scrore on ${subject}.`);
   } //grade
+
+  changeGrade(student) {
+    const randomNum = Math.floor(Math.random() * 100);
+    let posOrNeg = 0;
+
+    const plusOrMinus = () => {
+      if (Math.random() < 0.5) {
+        posOrNeg = -1;
+      } else {
+        posOrNeg = 1;
+      }
+      return posOrNeg;
+    };
+
+    return (student.grade = student.grade + randomNum * plusOrMinus());
+  } //changeGrade
 } //Instructor
 
 class Student extends Person {
@@ -34,6 +50,7 @@ class Student extends Person {
     this.previousBackground = student_Attributes.previousBackground;
     this.className = student_Attributes.className;
     this.favSubjects = student_Attributes.favSubjects;
+    this.grade = student_Attributes.grade;
   }
   //methods
   listsSubjects() {
@@ -47,6 +64,15 @@ class Student extends Person {
   sprintChallenge(subject) {
     console.log(`${this.name} has begun sprint challenge on ${subject}.`);
   } //sprintChallenge
+
+  graduate() {
+    if (this.grade >= 70) {
+      this.graduated = true;
+    } else {
+      this.graduated = false;
+    }
+    return this.graduated;
+  }
 } // Student
 
 class ProjectManager extends Instructor {
@@ -63,3 +89,24 @@ class ProjectManager extends Instructor {
     console.log(`${this.name} debugs ${student.name}'s code on ${subject}`);
   } //debugsCode
 } //ProjectManager
+
+// Objects
+const chris = new Student({
+  name: "Chris",
+  age: 24,
+  location: "Waterbury, CT",
+  previousBackground: "Front End Developer",
+  className: "WEB22",
+  favSubjects: ["Javascript", "React"],
+  grade: Math.floor(Math.random() * 100),
+  graduated: false
+});
+
+const brit = new Instructor({
+  name: "Brit"
+});
+
+console.log(chris.grade);
+console.log(brit.changeGrade(chris));
+
+console.log(chris.graduate());
